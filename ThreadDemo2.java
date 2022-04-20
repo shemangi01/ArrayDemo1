@@ -6,12 +6,19 @@ import java.awt.TextField;
 import java.awt.WindowEvent;
 import java.awt.event.WindowAdapter;
 
-public class ThreadDemo2 extends Frame {
+public class ThreadDemo2 extends Frame implements Runnable {
 	TextField t1, t2;
+	Thread th1, th2;
+	int i,j;
+	
 	public ThreadDemo2() {
 		setLayout(new FlowLayout());
 		add(t1 = new TextField(15));
 		add(t2 = new TextField(15));
+		th1 = new Thread(this);
+		th2 = new Thread(this);
+		th1.start();
+		th2.start();
 		
 		addWindowListener(new WindowAdapter() {
         public void windowClosing(windowEvent e) {
@@ -19,7 +26,7 @@ public class ThreadDemo2 extends Frame {
         }
 	
 	});
-		setSize(40,400);
+		setSize(500,500);
 		setVisible(true);
 		
 		
@@ -30,5 +37,35 @@ public class ThreadDemo2 extends Frame {
 		
 
 	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while(true) {
+			Thread th = Thread.currentThread();
+			if(th.equals(th1)) {
+				t1.setText(String.valueOf(i));
+				if(i==100)
+					i=0;
+				else
+					i++;
+				
+			}
+			if(th.equals(th2)) {
+				t2.setText(String.valueOf(j));
+				if(j==100)
+					j=0;
+				else
+					j++;
+				}
+			try {
+				Thread.sleep(10);
+				
+			}
+			catch(Exception e) {
+			
+		}
+		
+	}
 
+}
 }
